@@ -59,7 +59,13 @@ class App {
       set('debug', true);
     }
 
-    await connect(dbConnection.url);
+    try {
+      await connect(dbConnection.url);
+      logger.info(`MongoDB connected: ${dbConnection.url}`);
+    } catch (error) {
+      logger.error('MongoDB connection error:', error);
+      throw error;
+    }
   }
 
   private initializeMiddlewares() {
